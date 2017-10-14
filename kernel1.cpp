@@ -11,7 +11,13 @@ int main(void){
 	system("cat /proc/cpuinfo |awk 'NR==3, NR==4{print}'\n");
 	cout<<"\nAmount of CPU time since system was last booted is:\n";
 	system("sudo cat /proc/uptime\n");
-	
+	cout<<"\nConfigured Memory is:\n";
+	system("cat /proc/meminfo | awk 'NR==1{print$2}'\n");
+	cout<<"\nAmout of Free Memory:\n";
+	system("cat /proc/meminfo | awk 'NR==2{print$2}'\n");
+	cout<<"\nAmount of Memory used:\n";
+	system("cat /proc/meminfo | awk '{if (NR==1) a = $2; if(NR==2) b = $2 }END {print a-b}'\n");
+
 	cout<<endl;
 	return 0;
 	
