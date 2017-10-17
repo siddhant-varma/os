@@ -51,20 +51,24 @@ class psManagement{
 		}
 		
 		void sjf(void){
-			bool switched = true;
-			process hold;
-			for(int i = 0; i < size - 1 && switched; i++){
-				switched = false;
-				for(int j = 0; j < size - i - 1; j++){
-					if(ps[j].burstTime > ps[j+1].burstTime && (ps[j].arrTime > ps[j+1].arrTime) ){
-						switched = true;
-						hold = ps[j+1];
-						ps[j+1] = ps[j];
-						ps[j] = hold;
+			process min = ps[0];
+			process hold, finished;
+			for(int i = 0; i < size; i++){
+				for(int j = i+1; j < size; j++){
+					if(ps[i].burstTime > ps[j].burstTime && ps[i].arrTime < ps[j].arrTime ){
+						hold = ps[j];
+						ps[j] = ps[i];
+						ps[i] = hold;
 					}
 				}
+				showExecution();				
 			}
-			showExecution();
+			/*for(int i = 1; i < size; i++){
+				if(ps[i].burstTime < min.burstTime && (ps[i].arrTime < min.arrTime) ){
+					min = ps[i];
+				}
+			}*/
+			//showExecution();
 		}
 		
 		void showExecution(void){
