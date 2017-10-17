@@ -112,10 +112,10 @@ class psManagement{
 		}
 		
 		void rr(int timeQuanta){
-			int count = 0;
-			for(int i = 0; i <= timeRequired && i > -1; ){
-				//cout<<"\ti="<<i;
-				if(ps[i].arrTime <= (2 * count) && ps[i].leftTime > 0){
+			cout<<"Process execution:";
+			int i = 0;
+			for(int timeElapsed = 0; timeElapsed < timeRequired ; timeElapsed++){
+				if(ps[i].arrTime <= timeElapsed && ps[i].leftTime > 0){
 					int time = 0;
 					ps[i].leftTime = ps[i].leftTime - timeQuanta;	// Process executed
 					
@@ -131,8 +131,7 @@ class psManagement{
 				}
 				else{
 					i--;
-				}
-				count++;			
+				}		
 			}
 		}
 };
