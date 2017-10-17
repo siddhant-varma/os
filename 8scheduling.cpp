@@ -1,10 +1,11 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
 class psManagement{
 	private:
-		int size, timeElapsed;
+		int size, timeRequired;
 		struct process{
 			int arrTime, burstTime, priority, id;	//basic
 			int leftTime;							//advanced
@@ -15,6 +16,7 @@ class psManagement{
 		psManagement(int s){
 			size = s;
 			ps = new process[size];
+			timeRequired = 0;
 		}
 		
 		void intilizie(int ch){
@@ -26,11 +28,31 @@ class psManagement{
 				cout<<"\tBurst Time:\t";
 				cin>>ps[i].burstTime;
 				ps[i].leftTime = ps[i].burstTime;
+				timeRequired += ps[i].arrTime;
 				if(ch == 1){
 					cout<<"\tPriority:\t";
 					cin>>ps[i].priority;	
 				}
 			}
+		}
+		
+		void autoInitilizie(void){
+			ps[0].id = 1;
+			ps[0].arrTime = 0;
+			ps[0].burstTime = 10;
+			ps[0].leftTime = 10;
+			
+			ps[1].id = 2;
+			ps[1].arrTime = 5;
+			ps[1].burstTime = 6;
+			ps[1].leftTime = 6;
+			
+			ps[2].id = 3;
+			ps[2].arrTime = 6;
+			ps[2].burstTime = 3;
+			ps[2].leftTime = 3;
+			
+			timeRequired = 20;
 		}
 		
 		void fcfs(void){
@@ -88,7 +110,34 @@ class psManagement{
 				cout<<"\tP"<<ps[i].id;
 			}
 		}
+		
+		void rr(int timeQuanta){
+			int count = 0;
+			for(int i = 0; i <= timeRequired && i > -1; ){
+				//cout<<"\ti="<<i;
+				if(ps[i].arrTime <= (2 * count) && ps[i].leftTime > 0){
+					int time = 0;
+					ps[i].leftTime = ps[i].leftTime - timeQuanta;	// Process executed
+					
+					if(ps[i].leftTime >= 0){
+						time = timeQuanta;
+					}
+					else{
+						time = abs(timeQuanta + ps[i].leftTime);
+					}
+					cout<<"\tP"<<ps[i].id<<"("<<time<<")";
+					
+					i = (i+1) % size;
+				}
+				else{
+					i--;
+				}
+				count++;			
+			}
+		}
 };
+
+
 
 int main(void){
 	int temp;
@@ -98,15 +147,17 @@ int main(void){
 	
 	psManagement ps(temp);
 	
-	cout<<"\nFor entering priority also enter 1 else press 0...\t";
+	/*cout<<"\nFor entering priority also enter 1 else press 0...\t";
 	cin>>temp;
 	
-	ps.intilizie(temp);
+	ps.intilizie(temp);*/
+	
+	ps.autoInitilizie();
 	cout<<"\nProcess List:";
 	ps.show(0);
 	
 	do{
-		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority4.Exit:\t";
+		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.Exit:\t";
 		cin>>temp;
 		switch(temp){
 			case 1:
@@ -119,9 +170,14 @@ int main(void){
 				ps.priority();
 				break;
 			case 4:
+				cout<<"\nEnter time quanta:\t";
+				cin>>temp;
+				ps.rr(temp);
+				break;
+			case 5:
 				break;
 		}
-	}while(temp != 4);
+	}while(temp != 5);
 	
 		
 	return 0;
