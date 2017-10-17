@@ -4,11 +4,11 @@ using namespace std;
 
 class psManagement{
 	private:
-		int size;
-		
+		int size, timeElapsed;
 		struct process{
-			int arrTime, burstTime, priority, id;
-			
+			int arrTime, burstTime, priority, id;	//basic
+			int leftTime;							//advanced
+			int waitTime, turnTime;					//Performance	
 		} *ps;
 		
 	public:
@@ -25,8 +25,52 @@ class psManagement{
 				cin>>ps[i].arrTime;
 				cout<<"\tBurst Time:\t";
 				cin>>ps[i].burstTime;
-				/*cout<<"\tPriority:\t";
-				cin>>ps[i].priority;*/
+				ps[i].leftTime = ps[i].burstTime;
+				if(ch == 1){
+					cout<<"\tPriority:\t";
+					cin>>ps[i].priority;	
+				}
+			}
+		}
+		
+		void fcfs(void){
+			bool switched = true;
+			process hold;
+			for(int i = 0; i < size - 1 && switched; i++){
+				switched = false;
+				for(int j = 0; j < size - i - 1; j++){
+					if(ps[j].arrTime > ps[j+1].arrTime){
+						switched = true;
+						hold = ps[j+1];
+						ps[j+1] = ps[j];
+						ps[j] = hold;
+					}
+				}
+			}
+			showExecution();
+		}
+		
+		void sjf(void){
+			bool switched = true;
+			process hold;
+			for(int i = 0; i < size - 1 && switched; i++){
+				switched = false;
+				for(int j = 0; j < size - i - 1; j++){
+					if(ps[j].burstTime > ps[j+1].burstTime && (ps[j].arrTime > ps[j+1].arrTime) ){
+						switched = true;
+						hold = ps[j+1];
+						ps[j+1] = ps[j];
+						ps[j] = hold;
+					}
+				}
+			}
+			showExecution();
+		}
+		
+		void showExecution(void){
+			cout<<"\nProcesses execution sequence:";
+			for(int i = 0; i < size; i++){
+				cout<<"\tP"<<ps[i].id;
 			}
 		}
 };
@@ -38,7 +82,23 @@ int main(void){
 	cin>>temp;
 	
 	psManagement ps(temp);
-	ps.intilizie(temp);
+	ps.intilizie(0);
 	
+	do{
+		cout<<"\nEnter:\t1. FCFS\t2.SJF\t3.Exit:\t";
+		cin>>temp;
+		switch(temp){
+			case 1:
+				ps.fcfs();
+				break;
+			case 2:
+				ps.sjf();
+				break;
+			case 3:
+				break;
+		}
+	}while(temp != 3);
+	
+		
 	return 0;
 }
