@@ -55,15 +55,12 @@ class psManagement{
 			for(int i = 1; i < size; i++){
 				finished = ps[i - 1];
 				for(int j = i+1; j < size; j++){
-					//cout<<"\n\t\t\ti="<<i<<"\tj="<<j;
 					if(ps[i].burstTime > ps[j].burstTime && finished.burstTime >= ps[j].arrTime){
-						//cout<<"\tP"<<i+1<<"\tP"<<j+1;
 						hold = ps[j];
 						ps[j] = ps[i];
 						ps[i] = hold;
 					}
-				}
-				//show(1);				
+				}				
 			}
 			show(1);
 		}
@@ -74,15 +71,12 @@ class psManagement{
 			for(int i = 1; i < size; i++){
 				finished = ps[i - 1];
 				for(int j = i+1; j < size; j++){
-					//cout<<"\n\t\t\ti="<<i<<"\tj="<<j;
 					if(ps[i].priority > ps[j].priority && finished.burstTime >= ps[j].arrTime){
-						//cout<<"\tP"<<i+1<<"\tP"<<j+1;
 						hold = ps[j];
 						ps[j] = ps[i];
 						ps[i] = hold;
 					}
-				}
-				//show(1);				
+				}			
 			}
 			show(1);
 		}
@@ -103,7 +97,11 @@ int main(void){
 	cin>>temp;
 	
 	psManagement ps(temp);
-	ps.intilizie(1);
+	
+	cout<<"\nFor entering priority also enter 1 else press 0...\t";
+	cin>>temp;
+	
+	ps.intilizie(temp);
 	cout<<"\nProcess List:";
 	ps.show(0);
 	
