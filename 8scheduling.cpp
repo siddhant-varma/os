@@ -28,7 +28,7 @@ class psManagement{
 				cout<<"\tBurst Time:\t";
 				cin>>ps[i].burstTime;
 				ps[i].leftTime = ps[i].burstTime;
-				timeRequired += ps[i].arrTime;
+				timeRequired += ps[i].burstTime;
 				if(ch == 1){
 					cout<<"\tPriority:\t";
 					cin>>ps[i].priority;	
@@ -48,11 +48,11 @@ class psManagement{
 			ps[1].leftTime = 6;
 			
 			ps[2].id = 3;
-			ps[2].arrTime = 6;
+			ps[2].arrTime = 9;
 			ps[2].burstTime = 3;
 			ps[2].leftTime = 3;
 			
-			timeRequired = 20;
+			timeRequired = 19;
 		}
 		
 		void fcfs(void){
@@ -113,8 +113,12 @@ class psManagement{
 		
 		void rr(int timeQuanta){
 			cout<<"Process execution:";
-			int i = 0;
-			for(int timeElapsed = 0; timeElapsed < timeRequired ; timeElapsed++){
+			bool completed = false;
+			//for(int i = 0; !completed ; i = (i+1) % size)
+			
+			for(int timeElapsed = 0, i = 0; timeElapsed < timeRequired; i = (i+1) % size){
+				//cout<<"\ti="<<i;
+				//cout<<"\tElapsed="<<timeElapsed;
 				if(ps[i].arrTime <= timeElapsed && ps[i].leftTime > 0){
 					int time = 0;
 					ps[i].leftTime = ps[i].leftTime - timeQuanta;	// Process executed
@@ -125,13 +129,14 @@ class psManagement{
 					else{
 						time = abs(timeQuanta + ps[i].leftTime);
 					}
-					cout<<"\tP"<<ps[i].id<<"("<<time<<")";
-					
-					i = (i+1) % size;
+					cout<<"\tP"<<ps[i].id<<"("<<time<<")";			// for time.
+					timeElapsed += time;
+					//i = (i+1) % size;
 				}
+				
 				else{
-					i--;
-				}		
+					completed = true;
+				}	
 			}
 		}
 };
@@ -146,12 +151,13 @@ int main(void){
 	
 	psManagement ps(temp);
 	
-	/*cout<<"\nFor entering priority also enter 1 else press 0...\t";
+	cout<<"\nFor entering priority also enter 1 else press 0...\t";
 	cin>>temp;
 	
-	ps.intilizie(temp);*/
+	ps.intilizie(temp);
+	/*psManagement ps(3);
+	ps.autoInitilizie();*/
 	
-	ps.autoInitilizie();
 	cout<<"\nProcess List:";
 	ps.show(0);
 	
@@ -169,9 +175,10 @@ int main(void){
 				ps.priority();
 				break;
 			case 4:
+				int tq;
 				cout<<"\nEnter time quanta:\t";
-				cin>>temp;
-				ps.rr(temp);
+				cin>>tq;
+				ps.rr(tq);
 				break;
 			case 5:
 				break;
