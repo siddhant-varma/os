@@ -47,32 +47,30 @@ class psManagement{
 					}
 				}
 			}
-			showExecution();
+			show(1);
 		}
 		
 		void sjf(void){
-			process min = ps[0];
 			process hold, finished;
-			for(int i = 0; i < size; i++){
+			for(int i = 1; i < size; i++){
+				finished = ps[i - 1];
 				for(int j = i+1; j < size; j++){
-					if(ps[i].burstTime > ps[j].burstTime && ps[i].arrTime < ps[j].arrTime ){
+					//cout<<"\n\t\t\ti="<<i<<"\tj="<<j;
+					if(ps[i].burstTime > ps[j].burstTime && finished.burstTime >= ps[j].arrTime){
+						//cout<<"\tP"<<i+1<<"\tP"<<j+1;
 						hold = ps[j];
 						ps[j] = ps[i];
 						ps[i] = hold;
 					}
 				}
-				showExecution();				
+				//show(1);				
 			}
-			/*for(int i = 1; i < size; i++){
-				if(ps[i].burstTime < min.burstTime && (ps[i].arrTime < min.arrTime) ){
-					min = ps[i];
-				}
-			}*/
-			//showExecution();
+			show(1);
 		}
 		
-		void showExecution(void){
-			cout<<"\nProcesses execution sequence:";
+		void show(int a){
+			if(a > 0)
+				cout<<"Processes execution sequence:";
 			for(int i = 0; i < size; i++){
 				cout<<"\tP"<<ps[i].id;
 			}
@@ -87,9 +85,11 @@ int main(void){
 	
 	psManagement ps(temp);
 	ps.intilizie(0);
+	cout<<"\nProcess List:";
+	ps.show(0);
 	
 	do{
-		cout<<"\nEnter:\t1. FCFS\t2.SJF\t3.Exit:\t";
+		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Exit:\t";
 		cin>>temp;
 		switch(temp){
 			case 1:
