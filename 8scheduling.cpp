@@ -68,6 +68,25 @@ class psManagement{
 			show(1);
 		}
 		
+		void priority(void){
+			process hold, finished;
+			cout<<"\t\t\t(1 is Highest Priority.)\n";
+			for(int i = 1; i < size; i++){
+				finished = ps[i - 1];
+				for(int j = i+1; j < size; j++){
+					//cout<<"\n\t\t\ti="<<i<<"\tj="<<j;
+					if(ps[i].priority > ps[j].priority && finished.burstTime >= ps[j].arrTime){
+						//cout<<"\tP"<<i+1<<"\tP"<<j+1;
+						hold = ps[j];
+						ps[j] = ps[i];
+						ps[i] = hold;
+					}
+				}
+				//show(1);				
+			}
+			show(1);
+		}
+		
 		void show(int a){
 			if(a > 0)
 				cout<<"Processes execution sequence:";
@@ -84,12 +103,12 @@ int main(void){
 	cin>>temp;
 	
 	psManagement ps(temp);
-	ps.intilizie(0);
+	ps.intilizie(1);
 	cout<<"\nProcess List:";
 	ps.show(0);
 	
 	do{
-		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Exit:\t";
+		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority4.Exit:\t";
 		cin>>temp;
 		switch(temp){
 			case 1:
@@ -99,9 +118,12 @@ int main(void){
 				ps.sjf();
 				break;
 			case 3:
+				ps.priority();
+				break;
+			case 4:
 				break;
 		}
-	}while(temp != 3);
+	}while(temp != 4);
 	
 		
 	return 0;
