@@ -9,7 +9,8 @@ class psManagement{
 		struct process{
 			int arrTime, burstTime, priority, id;	//basic
 			int leftTime;							//advanced
-			int waitTime, turnTime;					//Performance	
+			int waitTime, turnTime;					//Performance
+			bool executed;	
 		} *ps;
 		
 	public:
@@ -28,6 +29,7 @@ class psManagement{
 				cout<<"\tBurst Time:\t";
 				cin>>ps[i].burstTime;
 				ps[i].leftTime = ps[i].burstTime;
+				ps[i].executed = false;
 				timeRequired += ps[i].burstTime;
 				if(ch == 1){
 					cout<<"\tPriority:\t";
@@ -39,20 +41,29 @@ class psManagement{
 		void autoInitilizie(void){
 			ps[0].id = 1;
 			ps[0].arrTime = 0;
-			ps[0].burstTime = 10;
-			ps[0].leftTime = 10;
+			ps[0].burstTime = 6;
+			ps[0].leftTime = 6;
+			ps[0].executed = false;
 			
 			ps[1].id = 2;
-			ps[1].arrTime = 5;
-			ps[1].burstTime = 6;
-			ps[1].leftTime = 6;
+			ps[1].arrTime = 1;
+			ps[1].burstTime = 8;
+			ps[1].leftTime = 8;
+			ps[1].executed = false;
 			
 			ps[2].id = 3;
-			ps[2].arrTime = 9;
-			ps[2].burstTime = 3;
-			ps[2].leftTime = 3;
+			ps[2].arrTime = 2;
+			ps[2].burstTime = 7;
+			ps[2].leftTime = 7;
+			ps[2].executed = false;
 			
-			timeRequired = 19;
+			ps[3].id = 4;
+			ps[3].arrTime = 3;
+			ps[3].burstTime = 3;
+			ps[3].leftTime = 3;
+			ps[3].executed = false;
+			
+			timeRequired = 24;
 		}
 		
 		void fcfs(void){
@@ -139,6 +150,56 @@ class psManagement{
 				}	
 			}
 		}
+		
+		void sjrf(void){
+			int old, current = 0;	//index for executed & executing processes.
+			int time,i ;
+			
+		    cout<<"Gantt Chart\n ";
+		    for(time=0;time < timeRequired ;time++)
+		    {
+		        old=current;
+		        current=getNextProcess(time);
+		        if(old != current || time == 0){
+		        	cout<<"("<<time<<")|==P"<< current + 1 <<"==|";
+				}
+				
+				ps[current].leftTime = ps[current].leftTime - 1;
+		        //rt[next]=rt[next]-1;
+		        if(ps[current].leftTime == 0)
+		        	ps[current].executed = true;
+		  			//finish[next]=1;
+		  			
+		        for(i = 0 ;i < size; i++)
+		            if(i != current && !ps[i].executed && ps[i].arrTime <= time)
+		            	ps[i].waitTime ++;
+		                //wt[i]++;
+		    }
+		    cout<<"("<<timeRequired<<")"<<endl;
+		    for(i = 0 ;i < size; i++)
+		        if(!ps[i].executed){
+					cout<<"Scheduling failed, cannot continue\n";
+					return ;
+				}
+		    //dispTime();
+		}
+		
+		int getNextProcess(int time){
+			int i,low;
+	        for(i = 0; i < size ; i++)
+	            if( !ps[i].executed ){
+	            	 low=i;
+					 break;	
+				}
+				
+	        for(i = 0;i < size; i++)
+	            if( !ps[i].executed )
+	            	if(ps[i].leftTime < ps[low].leftTime && ps[i].arrTime <= time)
+	                //if(rt[i]<rt[low] && at[i]<=time)
+	                        low=i;
+	                        
+	        return low;
+		}
 };
 
 
@@ -155,14 +216,14 @@ int main(void){
 	cin>>temp;
 	
 	ps.intilizie(temp);
-	/*psManagement ps(3);
+	/*psManagement ps(4);
 	ps.autoInitilizie();*/
 	
 	cout<<"\nProcess List:";
 	ps.show(0);
 	
 	do{
-		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.Exit:\t";
+		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6.Exit:\t";
 		cin>>temp;
 		switch(temp){
 			case 1:
@@ -181,9 +242,12 @@ int main(void){
 				ps.rr(tq);
 				break;
 			case 5:
+				ps.sjrf();
+				break;
+			case 6:
 				break;
 		}
-	}while(temp != 5);
+	}while(temp != 6);
 	
 		
 	return 0;
