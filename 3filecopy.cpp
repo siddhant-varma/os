@@ -1,7 +1,7 @@
-#include <iostream>
-#include <fcntl.h>
-#include <unistd.h>
-#include <cstdlib>
+#include <iostream>	//cout
+#include <fcntl.h>	//permissions = 0 & 0744
+#include <unistd.h>	//system calls
+#include <cstdlib>	//exit()
 
 using namespace std;
 

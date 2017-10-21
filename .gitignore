@@ -1,4 +1,8 @@
 *.out
 *.exe
 *temp*
+<<<<<<< HEAD
 *.txt
+=======
+*.PNG
+>>>>>>> eb809fb543747b399077a059c78cae8a60d77c9c
