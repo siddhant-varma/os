@@ -155,13 +155,13 @@ class psManagement{
 			int old, current = 0;	//index for executed & executing processes.
 			int time,i ;
 			
-		    cout<<"Gantt Chart\n ";
+		    cout<<"\n\tGantt Chart\n ";
 		    for(time=0;time < timeRequired ;time++)
 		    {
 		        old=current;
 		        current=getNextProcess(time);
 		        if(old != current || time == 0){
-		        	cout<<"("<<time<<")|==P"<< current + 1 <<"==|";
+		        	cout<<"("<<time<<")[--P"<< current + 1 <<"--]";
 				}
 				
 				ps[current].leftTime = ps[current].leftTime - 1;
