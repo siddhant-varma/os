@@ -1,7 +1,15 @@
 *.out
 *.exe
 *temp*
+<<<<<<< HEAD
+*.txt
+=======
 *.PNG
+<<<<<<< HEAD
 
 *.c
 *.cpp
+||||||| merged common ancestors
+=======
+>>>>>>> eb809fb543747b399077a059c78cae8a60d77c9c
+>>>>>>> ced7375d37f4fbf127e310f7170879f19d5d3d8b
