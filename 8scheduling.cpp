@@ -70,6 +70,33 @@ class psManagement{
 			ps[3].priority = 2;
 			ps[3].executed = false;
 			
+			store[0].id = 1;
+			store[0].arrTime = 0;
+			store[0].burstTime = 6;
+			store[0].leftTime = 6;
+			store[0].priority = 7;
+			store[0].executed = false;
+			
+			store[1].id = 2;
+			store[1].arrTime = 1;
+			store[1].burstTime = 8;
+			store[1].leftTime = 8;
+			store[1].priority = 4;
+			store[1].executed = false;
+			
+			store[2].id = 3;
+			store[2].arrTime = 2;
+			store[2].burstTime = 7;
+			store[2].leftTime = 7;
+			store[2].priority = 5;
+			store[2].executed = false;
+			
+			store[3].id = 4;
+			store[3].arrTime = 3;
+			store[3].burstTime = 3;
+			store[3].leftTime = 3;
+			store[3].priority = 2;
+			store[3].executed = false;
 			
 			
 			timeRequired = 24;
@@ -161,6 +188,7 @@ class psManagement{
 		}
 		
 		void sjrf(void){
+			ps = store;
 			int old, current = 0;	//index for executed & executing processes.
 			int time,i ;
 			
