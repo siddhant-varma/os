@@ -89,22 +89,6 @@ class psManagement{
 			show(1);
 		}
 		
-		void priority(void){
-			process hold, finished;
-			cout<<"\t\t\t(1 is Highest Priority.)\n";
-			for(int i = 1; i < size; i++){
-				finished = ps[i - 1];
-				for(int j = i+1; j < size; j++){
-					if(ps[i].priority > ps[j].priority && finished.burstTime >= ps[j].arrTime){
-						hold = ps[j];
-						ps[j] = ps[i];
-						ps[i] = hold;
-					}
-				}			
-			}
-			show(1);
-		}
-		
 		void show(int a){
 			if(a > 0)
 				cout<<"Processes execution sequence:";
