@@ -64,8 +64,8 @@ class psManagement{
 			
 			ps[3].id = 4;
 			ps[3].arrTime = 3;
-			ps[3].burstTime = 3;
-			ps[3].leftTime = 3;
+			ps[3].burstTime = 1;
+			ps[3].leftTime = 1;
 			ps[3].priority = 2;
 			ps[3].executed = false;
 						
@@ -157,7 +157,7 @@ class psManagement{
 			}
 		}
 		
-		void sjrf(void){
+		void schedule(void){
 			int old, current = 0;	//index for executed & executing processes.
 			int time,i ;
 			
@@ -270,8 +270,6 @@ class psManagement{
 		}
 };
 
-
-
 int main(void){
 	int temp;
 	
@@ -289,38 +287,35 @@ int main(void){
 	
 	cout<<"\nProcess List:";
 	ps.show(0);
-	
-	do{
-		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6Priority Preemptive\t7.Exit:\t";
-		cin>>temp;
-		ps.choice = temp;
-		switch(temp){
-			case 1:
-				ps.fcfs();
-				break;
-			case 2:
-				ps.sjf();
-				break;
-			case 3:
-				ps.priority();
-				break;
-			case 4:
-				int tq;
-				cout<<"\nEnter time quanta:\t";
-				cin>>tq;
-				ps.rr(tq);
-				break;
-			case 5:
-				ps.sjrf();
-				break;
-			case 6:
-				ps.sjrf();
-				break;
-			case 7:
-				break;
-		}
-	}while(temp != 7);
-	
+
+	cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6Priority Preemptive\t7.Exit:\t";
+	cin>>temp;
+	ps.choice = temp;
+	switch(temp){
+		case 1:
+			ps.fcfs();
+			break;
+		case 2:
+			ps.sjf();
+			break;
+		case 3:
+			ps.priority();
+			break;
+		case 4:
+			int tq;
+			cout<<"\nEnter time quanta:\t";
+			cin>>tq;
+			ps.rr(tq);
+			break;
+		case 5:
+			ps.schedule();
+			break;
+		case 6:
+			ps.schedule();
+			break;
+		case 7:
+			break;
+	}
 		
 	return 0;
 }
