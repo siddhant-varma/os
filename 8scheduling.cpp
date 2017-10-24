@@ -78,7 +78,7 @@ class psManagement{
 			for(int i = 1; i < size; i++){
 				cout<<"("<<time<<")[--P"<< ps[i - 1].id <<"--]";
 				finished = ps[i - 1];
-				finished.waitTime = time;
+				ps[i - 1].waitTime = time - ps[i - 1].arrTime;
 				time += finished.burstTime;
 				for(int j = i+1; j < size; j++){
 					if( finished.burstTime >= ps[j].arrTime )
@@ -90,7 +90,17 @@ class psManagement{
 				}		
 			}
 			
+			ps[size - 1].waitTime = time - ps[size - 1].arrTime;
 			cout<<"("<<time<<")[--P"<< ps[size - 1].id <<"--]"<<"("<<timeRequired<<")";
+		}
+		
+		void avgWaitTime(void){
+			float totalWait = 0;
+			for(int i = 0; i < size; i++){
+				cout<<"\t"<<ps[i].waitTime;
+				totalWait += ps[i].waitTime;
+			}
+			cout<<"\nAverage Waiting Time:\t"<<(totalWait / size);
 		}
 		
 		void rr(int timeQuanta){
@@ -238,6 +248,8 @@ int main(void){
 		case 7:
 			break;
 	}
-		
+	
+	ps.avgWaitTime();
+	
 	return 0;
 }
