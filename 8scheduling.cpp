@@ -73,20 +73,24 @@ class psManagement{
 		}
 			
 		void nonPreSchedule(void){
+			int time = 0;
 			process hold, finished;
 			for(int i = 1; i < size; i++){
+				cout<<"("<<time<<")[--P"<< ps[i - 1].id <<"--]";
 				finished = ps[i - 1];
+				finished.waitTime = time;
+				time += finished.burstTime;
 				for(int j = i+1; j < size; j++){
 					if( finished.burstTime >= ps[j].arrTime )
-					if(ps[i].burstTime > ps[j].burstTime && choice == 2 || ps[i].priority > ps[j].priority && choice == 3){
-						hold = ps[j];
-						ps[j] = ps[i];
-						ps[i] = hold;
-					}
-					//if( ps[i].priority > ps[j].priority )
-				}				
+						if(ps[i].burstTime > ps[j].burstTime && choice == 2 || ps[i].priority > ps[j].priority && choice == 3){
+							hold = ps[j];
+							ps[j] = ps[i];
+							ps[i] = hold;
+						}
+				}			
 			}
-			show(1);
+			
+			cout<<"("<<time<<")[--P"<< ps[size - 1].id <<"--]"<<"("<<timeRequired<<")";
 		}
 		
 		void show(int a){
@@ -137,7 +141,7 @@ class psManagement{
 		        current=getNextProcess(time);
 		        //	conext switching
 		        if(old != current || time == 0){	//	if current process is not old then execute and Initial process execution
-		        	cout<<"("<<time<<")[--P"<< current + 1 <<"--]";	//	time outputs leaving time of last executing process
+		        	cout<<"("<<time<<")[--P"<< ps[current].id <<"--]";	//	time outputs leaving time of last executing process
 				}
 				
 				ps[current].leftTime = ps[current].leftTime - 1;	// decrementing remaining execution time for executing process
@@ -220,10 +224,10 @@ int main(void){
 			ps.schedule();
 			break;
 		case 2:
-			ps.sjf();
+			ps.nonPreSchedule();
 			break;
 		case 3:
-			ps.sjf();
+			ps.nonPreSchedule();
 			break;
 		case 4:
 			int tq;
