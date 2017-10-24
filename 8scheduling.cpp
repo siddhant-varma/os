@@ -164,43 +164,47 @@ class psManagement{
 		    {
 		        old=current;
 		        current=getNextProcess(time);
-		        if(old != current || time == 0){
-		        	cout<<"("<<time<<")[--P"<< current + 1 <<"--]";
+		        //	conext switching
+		        if(old != current || time == 0){	//	if current process is not old then execute and Initial process execution
+		        	cout<<"("<<time<<")[--P"<< current + 1 <<"--]";	//	time outputs leaving time of last executing process
 				}
 				
-				ps[current].leftTime = ps[current].leftTime - 1;
-		        //rt[next]=rt[next]-1;
-		        if(ps[current].leftTime == 0)
-		        	ps[current].executed = true;
-		  			//finish[next]=1;
+				ps[current].leftTime = ps[current].leftTime - 1;	// decrementing remaining execution time for executing process
+		        
+				if(ps[current].leftTime == 0)
+		        	ps[current].executed = true;	//	Successful complition of process
 		  			
 		        for(i = 0 ;i < size; i++)
 		            if(i != current && !ps[i].executed && ps[i].arrTime <= time)
-		            	ps[i].waitTime ++;
-		                //wt[i]++;
+		            	ps[i].waitTime ++;	//	incrementing waiiting time of all arrived process except executed and executing one
 		    }
-		    cout<<"("<<timeRequired<<")"<<endl;
+		    
+		    cout<<"("<<timeRequired<<")"<<endl;	//	displaying total execution time or time when last process completes
+		    
+		    //Checks for any leftover process that has not completed execution.
 		    for(i = 0 ;i < size; i++)
 		        if(!ps[i].executed){
 					cout<<"Scheduling failed, cannot continue\n";
 					return ;
 				}
-		    //dispTime();
 		}
 		
 		int getNextProcess(int time){
 			int i,low;
+			
+			//	Initially choosing the first uncomplete process irrespective of time and assigning its value to low
 	        for(i = 0; i < size ; i++)
 	            if( !ps[i].executed ){
 	            	 low=i;
 					 break;	
 				}
-				
+			
+			//	Determining eligble process
 	        for(i = 0;i < size; i++)
-	            if( !ps[i].executed )
-	            	if(ps[i].leftTime < ps[low].leftTime && ps[i].arrTime <= time)
-	                //if(rt[i]<rt[low] && at[i]<=time)
-	                        low=i;
+	            if( !ps[i].executed ) 	//	checking if the process has completed execution or not
+	            	if(ps[i].arrTime <= time)	//	Checking the process has arrived or not at the given time
+		            	if(ps[i].leftTime < ps[low].leftTime)	//	choosing process with least remaining execution time
+		                        low=i;
 	                        
 	        return low;
 		}
