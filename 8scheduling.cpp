@@ -8,13 +8,13 @@ class psManagement{
 		int size, timeRequired;
 		struct process{
 			int arrTime, burstTime, priority, id;	//basic
-			int leftTime;							//advanced
+			int leftTime;							
 			int waitTime, turnTime;					//Performance
-			bool executed;	
+			bool executed;
 		} *ps;
 		
 	public:
-		int choice;
+		int choice;	//	For choosing which scheduling algo will be executed
 		
 		psManagement(int s){
 			size = s;
@@ -87,18 +87,10 @@ class psManagement{
 							ps[j] = ps[i];
 							ps[i] = hold;
 						}
-				}			
+				}		
 			}
 			
 			cout<<"("<<time<<")[--P"<< ps[size - 1].id <<"--]"<<"("<<timeRequired<<")";
-		}
-		
-		void show(int a){
-			if(a > 0)
-				cout<<"Processes execution sequence:";
-			for(int i = 0; i < size; i++){
-				cout<<"\tP"<<ps[i].id;
-			}
 		}
 		
 		void rr(int timeQuanta){
@@ -213,11 +205,13 @@ int main(void){
 	psManagement ps(4);
 	ps.autoInitilizie();
 	
-	cout<<"\nProcess List:";
-	ps.show(0);
+	/*cout<<"\nProcess List:";
+	ps.show(0);*/
 
 	cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6.Priority Preemptive\t7.Exit:\t";
 	cin>>temp;
+	cout<<"\nProcess Execution:\t";
+	
 	ps.choice = temp;
 	switch(temp){
 		case 1:
