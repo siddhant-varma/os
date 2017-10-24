@@ -40,38 +40,7 @@ class psManagement{
 			}
 		}
 		
-		void autoInitilizie(void){
-			ps[0].id = 1;
-			ps[0].arrTime = 0;
-			ps[0].burstTime = 6;
-			ps[0].leftTime = 6;
-			ps[0].priority = 7;
-			ps[0].executed = false;
-			
-			ps[1].id = 2;
-			ps[1].arrTime = 1;
-			ps[1].burstTime = 8;
-			ps[1].leftTime = 8;
-			ps[1].priority = 4;
-			ps[1].executed = false;
-			
-			ps[2].id = 3;
-			ps[2].arrTime = 2;
-			ps[2].burstTime = 7;
-			ps[2].leftTime = 7;
-			ps[2].priority = 5;
-			ps[2].executed = false;
-			
-			ps[3].id = 4;
-			ps[3].arrTime = 3;
-			ps[3].burstTime = 1;
-			ps[3].leftTime = 1;
-			ps[3].priority = 2;
-			ps[3].executed = false;
-						
-			timeRequired = 22;
-		}
-			
+		//	Non Preemptive Schedule Algo	
 		void nonPreSchedule(void){
 			int time = 0;
 			process hold, finished;
@@ -94,14 +63,12 @@ class psManagement{
 			cout<<"("<<time<<")[--P"<< ps[size - 1].id <<"--]"<<"("<<timeRequired<<")";
 		}
 		
+		//	Round Robin Scheduling
 		void rr(int timeQuanta){
 			cout<<"Process execution:";
 			bool completed = false;
-			//for(int i = 0; !completed ; i = (i+1) % size)
 			
 			for(int timeElapsed = 0, i = 0; timeElapsed < timeRequired; i = (i+1) % size){
-				//cout<<"\ti="<<i;
-				//cout<<"\tElapsed="<<timeElapsed;
 				if(ps[i].arrTime <= timeElapsed && ps[i].leftTime > 0){
 					int time = 0;
 					ps[i].leftTime = ps[i].leftTime - timeQuanta;	// Process executed
@@ -114,7 +81,6 @@ class psManagement{
 					}
 					cout<<"\tP"<<ps[i].id<<"("<<time<<")";			// for time.
 					timeElapsed += time;
-					//i = (i+1) % size;
 				}
 				
 				else{
@@ -123,7 +89,8 @@ class psManagement{
 			}
 		}
 		
-		void schedule(void){
+		//Preemptive Schedule
+		void preSchedule(void){
 			int old, current = 0;	//index for executed & executing processes.
 			int time,i ;
 			
@@ -157,6 +124,7 @@ class psManagement{
 				}
 		}
 		
+		//	Determing next process to be executed for Preemptive Scheduling
 		int getNextProcess(int time){
 			int i,low;
 			
@@ -189,6 +157,7 @@ class psManagement{
 	        return low;
 		}
 	
+		//	Calculating Average Waiting and Turnaround time
 		void performance(void){
 			float totalWait = 0, totalTurnAround = 0;
 			for(int i = 0; i < size; i++){
@@ -207,7 +176,7 @@ class psManagement{
 int main(void){
 	int temp;
 	
-	/*cout<<"Enter Number of processes:\t";
+	cout<<"Enter Number of processes:\t";
 	cin>>temp;
 	
 	psManagement ps(temp);
@@ -215,12 +184,7 @@ int main(void){
 	cout<<"\nFor entering priority also enter 1 else press 0...\t";
 	cin>>temp;
 	
-	ps.intilizie(temp);*/
-	psManagement ps(4);
-	ps.autoInitilizie();
-	
-	/*cout<<"\nProcess List:";
-	ps.show(0);*/
+	ps.intilizie(temp);
 
 	cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6.Priority Preemptive\t7.Exit:\t";
 	cin>>temp;
@@ -229,7 +193,7 @@ int main(void){
 	ps.choice = temp;
 	switch(temp){
 		case 1:
-			ps.schedule();
+			ps.preSchedule();
 			break;
 		case 2:
 			ps.nonPreSchedule();
@@ -244,10 +208,10 @@ int main(void){
 			ps.rr(tq);
 			break;
 		case 5:
-			ps.schedule();
+			ps.preSchedule();
 			break;
 		case 6:
-			ps.schedule();
+			ps.preSchedule();
 			break;
 		case 7:
 			break;
