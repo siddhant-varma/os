@@ -219,55 +219,6 @@ class psManagement{
 	        return low;
 		}
 		
-		void priorityPre(void){
-			int old, current = 0;	//index for executed & executing processes.
-			int time,i ;
-			
-		    cout<<"\n\tGantt Chart\n ";
-		    for(time=0;time < timeRequired ;time++)
-		    {
-		        old=current;
-		        current=getNext(time);
-		        if(old != current || time == 0){
-		        	cout<<"("<<time<<")[--P"<< current + 1 <<"--]";
-				}
-				
-				ps[current].leftTime = ps[current].leftTime - 1;
-		        //rt[next]=rt[next]-1;
-		        if(ps[current].leftTime == 0)
-		        	ps[current].executed = true;
-		  			//finish[next]=1;
-		  			
-		        for(i = 0 ;i < size; i++)
-		            if(i != current && !ps[i].executed && ps[i].arrTime <= time)
-		            	ps[i].waitTime ++;
-		                //wt[i]++;
-		    }
-		    cout<<"("<<timeRequired<<")"<<endl;
-		    for(i = 0 ;i < size; i++)
-		        if(!ps[i].executed){
-					cout<<"Scheduling failed, cannot continue\n";
-					return ;
-				}
-		    //dispTime();
-		}
-		
-		int getNext(int time){
-			int i,low;
-	        for(i = 0; i < size ; i++)
-	            if( !ps[i].executed ){
-	            	 low=i;
-					 break;	
-				}
-				
-	        for(i = 0;i < size; i++)
-	            if( !ps[i].executed )
-	            	if(ps[i].priority < ps[low].priority && ps[i].arrTime <= time)
-	                //if(rt[i]<rt[low] && at[i]<=time)
-	                        low=i;
-	                        
-	        return low;
-		}
 };
 
 int main(void){
