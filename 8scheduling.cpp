@@ -69,26 +69,9 @@ class psManagement{
 			ps[3].priority = 2;
 			ps[3].executed = false;
 						
-			timeRequired = 24;
+			timeRequired = 22;
 		}
-		
-		void fcfs(void){
-			bool switched = true;
-			process hold;
-			for(int i = 0; i < size - 1 && switched; i++){
-				switched = false;
-				for(int j = 0; j < size - i - 1; j++){
-					if(ps[j].arrTime > ps[j+1].arrTime){
-						switched = true;
-						hold = ps[j+1];
-						ps[j+1] = ps[j];
-						ps[j] = hold;
-					}
-				}
-			}
-			show(1);
-		}
-		
+			
 		void sjf(void){
 			process hold, finished;
 			for(int i = 1; i < size; i++){
@@ -206,6 +189,10 @@ class psManagement{
 	            if( !ps[i].executed ) 	//	checking if the process has completed execution or not
 	            	if(ps[i].arrTime <= time)	//	Checking the process has arrived or not at the given time
 	            		switch(choice){
+	            			case 1:
+	            				if(ps[i].arrTime < ps[low].arrTime)	//	choosing process with least remaining execution time
+		                        	low=i;
+	            				break;
 	            			case 5:
 	            				if(ps[i].leftTime < ps[low].leftTime)	//	choosing process with least remaining execution time
 		                        	low=i;
@@ -244,7 +231,7 @@ int main(void){
 	ps.choice = temp;
 	switch(temp){
 		case 1:
-			ps.fcfs();
+			ps.schedule();
 			break;
 		case 2:
 			ps.sjf();
