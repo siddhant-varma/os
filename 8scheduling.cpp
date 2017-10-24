@@ -94,15 +94,6 @@ class psManagement{
 			cout<<"("<<time<<")[--P"<< ps[size - 1].id <<"--]"<<"("<<timeRequired<<")";
 		}
 		
-		void avgWaitTime(void){
-			float totalWait = 0;
-			for(int i = 0; i < size; i++){
-				cout<<"\t"<<ps[i].waitTime;
-				totalWait += ps[i].waitTime;
-			}
-			cout<<"\nAverage Waiting Time:\t"<<(totalWait / size);
-		}
-		
 		void rr(int timeQuanta){
 			cout<<"Process execution:";
 			bool completed = false;
@@ -197,7 +188,20 @@ class psManagement{
 						    
 	        return low;
 		}
-		
+	
+		void performance(void){
+			float totalWait = 0, totalTurnAround = 0;
+			for(int i = 0; i < size; i++){
+				//cout<<"\t"<<ps[i].waitTime;
+				totalWait += ps[i].waitTime;
+				
+				ps[i].turnTime = ps[i].waitTime + ps[i].arrTime;
+				totalTurnAround += ps[i].turnTime;
+			}
+			cout<<"\nAverage Waiting Time:\t"<<(totalWait / size);
+			cout<<"\nAverage Turn Around Time:\t"<<(totalTurnAround / size);
+		}
+			
 };
 
 int main(void){
@@ -249,7 +253,7 @@ int main(void){
 			break;
 	}
 	
-	ps.avgWaitTime();
+	ps.performance();
 	
 	return 0;
 }
