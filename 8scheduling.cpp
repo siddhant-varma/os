@@ -11,12 +11,15 @@ class psManagement{
 			int leftTime;							//advanced
 			int waitTime, turnTime;					//Performance
 			bool executed;	
-		} *ps;
+		} *ps, *store;
 		
 	public:
+		int choice;
+		
 		psManagement(int s){
 			size = s;
 			ps = new process[size];
+			store = new process[size];
 			timeRequired = 0;
 		}
 		
@@ -66,6 +69,8 @@ class psManagement{
 			ps[3].leftTime = 3;
 			ps[3].priority = 2;
 			ps[3].executed = false;
+			
+			
 			
 			timeRequired = 24;
 		}
@@ -203,9 +208,17 @@ class psManagement{
 	        for(i = 0;i < size; i++)
 	            if( !ps[i].executed ) 	//	checking if the process has completed execution or not
 	            	if(ps[i].arrTime <= time)	//	Checking the process has arrived or not at the given time
-		            	if(ps[i].leftTime < ps[low].leftTime)	//	choosing process with least remaining execution time
-		                        low=i;
-	                        
+	            		switch(choice){
+	            			case 5:
+	            				if(ps[i].leftTime < ps[low].leftTime)	//	choosing process with least remaining execution time
+		                        	low=i;
+		                        break;
+		                    case 6:
+		                    	if(ps[i].priority < ps[low].priority)
+		                    		low = i;
+		                    	break;
+						}
+						    
 	        return low;
 		}
 		
@@ -283,6 +296,7 @@ int main(void){
 	do{
 		cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6Priority Preemptive\t7.Exit:\t";
 		cin>>temp;
+		ps.choice = temp;
 		switch(temp){
 			case 1:
 				ps.fcfs();
@@ -303,7 +317,7 @@ int main(void){
 				ps.sjrf();
 				break;
 			case 6:
-				ps.priorityPre();
+				ps.sjrf();
 				break;
 			case 7:
 				break;
