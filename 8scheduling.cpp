@@ -72,16 +72,18 @@ class psManagement{
 			timeRequired = 22;
 		}
 			
-		void sjf(void){
+		void nonPreSchedule(void){
 			process hold, finished;
 			for(int i = 1; i < size; i++){
 				finished = ps[i - 1];
 				for(int j = i+1; j < size; j++){
-					if(ps[i].burstTime > ps[j].burstTime && finished.burstTime >= ps[j].arrTime){
+					if( finished.burstTime >= ps[j].arrTime )
+					if(ps[i].burstTime > ps[j].burstTime && choice == 2 || ps[i].priority > ps[j].priority && choice == 3){
 						hold = ps[j];
 						ps[j] = ps[i];
 						ps[i] = hold;
 					}
+					//if( ps[i].priority > ps[j].priority )
 				}				
 			}
 			show(1);
@@ -226,7 +228,7 @@ int main(void){
 	cout<<"\nProcess List:";
 	ps.show(0);
 
-	cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6Priority Preemptive\t7.Exit:\t";
+	cout<<"\n\nEnter:\t1. FCFS\t2.SJF\t3.Priority\t4.Round Robin\t5.SJRF\t6.Priority Preemptive\t7.Exit:\t";
 	cin>>temp;
 	ps.choice = temp;
 	switch(temp){
@@ -237,7 +239,7 @@ int main(void){
 			ps.sjf();
 			break;
 		case 3:
-			ps.priority();
+			ps.sjf();
 			break;
 		case 4:
 			int tq;
