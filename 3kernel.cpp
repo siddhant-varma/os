@@ -1,3 +1,6 @@
+//3. WRITE A PROGRAM to report behaviour of Linux kernel including information on
+// configured memory, amount of free and used memory. (memory information)
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,3 +1,6 @@
+//4. WRITE A PROGRAM to print file details including owner access permissions, file access
+// time, where file name is given as argument.
+
 #include <iostream>	//cout
 #include <cstdlib>	//exit()
 #include <sys/stat.h> 	//stat s
