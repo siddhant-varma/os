@@ -1,3 +1,5 @@
+// 12. Write program to calculate sum of n numbers using thread library.
+
 //compile using -pthread flag:	gcc -pthread 7pthread.c
 #include <stdio.h>	//fprintf(), printf()
 #include <pthread.h>// thread library
