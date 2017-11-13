@@ -1,2 +1,1 @@
-# os
-OS Practicals
+Operating System Practicals
