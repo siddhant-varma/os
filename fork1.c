@@ -14,7 +14,7 @@ void main()
     }
     
     printf("\nOutput of fork:\t%d",pid);
-    printf("\nProcess id is:\t%d\n",p);
+    printf("\nProcess id is:\t%d",p);
 
 }
 
