@@ -15,7 +15,7 @@ void main()
 		execlp("/bin/ls","ls",NULL);
 	}	
 	else{
-		printf("\nParent Process.\n");
+		printf("Parent Process.");
     }
     exit(1);
 		
