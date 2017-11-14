@@ -1,15 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
- 
-int mutex=1,full=0,empty=3,x=0;
- 
+#define MAXSIZE 16
+
+int size=0,x=0, buffer[15], in=0,out=0;
+
+void producer();
+void consumer();
 int main()
 {
     int n;
-    void producer();
-    void consumer();
-    int wait(int);
-    int signal(int);
     printf("\n1.Producer\n2.Consumer\n3.Exit");
     while(1)
     {
@@ -17,12 +16,12 @@ int main()
         scanf("%d",&n);
         switch(n)
         {
-            case 1:    if((mutex==1)&&(empty!=0))
+            case 1:    if((size!=MAXSIZE))
                         producer();
                     else
                         printf("Buffer is full!!");
                     break;
-            case 2:    if((mutex==1)&&(full!=0))
+            case 2:    if((size>0))
                         consumer();
                     else
                         printf("Buffer is empty!!");
@@ -35,33 +34,18 @@ int main()
     
     return 0;
 }
- 
-int wait(int s)
-{
-    return (--s);
-}
- 
-int signal(int s)
-{
-    return(++s);
-}
- 
+
 void producer()
 {
-    mutex=wait(mutex);
-    full=signal(full);
-    empty=wait(empty);
-    x++;
-    printf("\nProducer produces the item %d",x);
-    mutex=signal(mutex);
+    buffer[in] = x++;
+    printf("\nProducer produces the item %d",buffer[in]);
+    in = (in+1) % MAXSIZE;
+    size = size + 1;
 }
  
 void consumer()
 {
-    mutex=wait(mutex);
-    full=wait(full);
-    empty=signal(empty);
-    printf("\nConsumer consumes item %d",x);
-    x--;
-    mutex=signal(mutex);
+    printf("\nConsumer consumes item %d",buffer[out]);
+    out = (out + 1) % MAXSIZE;
+    size--;
 }
