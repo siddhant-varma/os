@@ -29,11 +29,11 @@ void main()
     {
         for(j=1;j<=nb;j++)
         {
-            if(barray[j]!=1)
+            if(1)
             {
                 temp=b[j]-p[i];
                 if(temp>=0)
-                    if(lowest>temp)
+                    if(temp < lowest)
                     {
                         parray[i]=j;
                         lowest=temp;
