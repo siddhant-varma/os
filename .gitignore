@@ -2,6 +2,7 @@
 *.exe
 *temp*
 *.txt
+*.png
 *.PNG
 *.pdf
 *.ini
