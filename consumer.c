@@ -42,7 +42,7 @@ void producer()
     in = (in+1) % MAXSIZE;
     size = size + 1;
 }
- 
+
 void consumer()
 {
     printf("\nConsumer consumes item %d",buffer[out]);
