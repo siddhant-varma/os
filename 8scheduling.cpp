@@ -81,6 +81,12 @@ class psManagement{
 					}
 					cout<<"\tP"<<ps[i].id<<"("<<time<<")";			// for time.
 					timeElapsed += time;
+
+					for(int j = 0; j < size; j++){
+						if(!ps[j].executed && j != i && ps[j].arrTime <= timeElapsed)
+							ps[j].waitTime = ps[j].waitTime + time ;
+					}
+
 				}
 				
 				else{
@@ -98,6 +104,7 @@ class psManagement{
 		    for(time=0;time < timeRequired ;time++)
 		    {
 		        old=current;
+		        if(ps[current].executed)
 		        current=getNextProcess(time);
 		        //	conext switching
 		        if(old != current || time == 0){	//	if current process is not old then execute and Initial process execution
@@ -142,15 +149,15 @@ class psManagement{
 	            		switch(choice){
 	            			case 1:
 	            				if(ps[i].arrTime < ps[low].arrTime)	//	choosing process with least remaining execution time
-		                        	low=i;
+		                        	low=i;	//	fcfs
 	            				break;
 	            			case 5:
 	            				if(ps[i].leftTime < ps[low].leftTime)	//	choosing process with least remaining execution time
-		                        	low=i;
+		                        	low=i;	//	sjrf
 		                        break;
 		                    case 6:
 		                    	if(ps[i].priority < ps[low].priority)
-		                    		low = i;
+		                    		low = i;	//	preemptive priority
 		                    	break;
 						}
 						    
